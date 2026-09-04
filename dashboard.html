@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <!-- dashboard page i made this one - priyanshu -->
 <!-- TODO: make this look better someday lol -->
@@ -13,6 +13,7 @@
         rel="stylesheet">
     <style>
         /* ok so styles. I did most of these at 2am so they might be kinda bad */
+        /* switched to light mode now - looks cleaner i think */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,18 +21,10 @@
         }
 
         body {
-            background: #0a0a1a;
-            color: #e0e0e0;
+            background: #f0f4f8;
+            color: #1a202c;
             font-family: 'Inter', Arial, sans-serif;
             min-height: 100vh;
-            background-image:
-                radial-gradient(circle at 20% 50%, rgba(30, 20, 60, 0.8) 0%, transparent 60%),
-                radial-gradient(circle at 80% 20%, rgba(10, 30, 60, 0.6) 0%, transparent 50%),
-                radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 20px);
-            background-size: 100% 100%, 100% 100%, 550px 550px, 350px 350px, 250px 250px;
-            background-color: #0a0a1a;
         }
 
         /* nav bar - not needed but will be good*/
@@ -40,24 +33,24 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
         }
 
         .nav-logo {
             font-family: 'Space Mono', monospace;
             font-size: 1.1rem;
-            color: #7dd3fc;
+            color: #2563eb;
             text-decoration: none;
             letter-spacing: 2px;
         }
 
         .nav-links a {
-            color: #aaa;
+            color: #64748b;
             text-decoration: none;
             margin-left: 20px;
             font-size: 0.9rem;
@@ -65,12 +58,12 @@
         }
 
         .nav-links a:hover {
-            color: #7dd3fc;
+            color: #2563eb;
         }
 
         .nav-links a.active {
-            color: #7dd3fc;
-            border-bottom: 2px solid #7dd3fc;
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
             padding-bottom: 2px;
         }
 
@@ -83,13 +76,12 @@
         h1.page-title {
             font-family: 'Space Mono', monospace;
             font-size: 1.8rem;
-            color: #7dd3fc;
+            color: #1e40af;
             margin-bottom: 5px;
-            text-shadow: 0 0 20px rgba(125, 211, 252, 0.4);
         }
 
         .subtitle {
-            color: #666;
+            color: #94a3b8;
             font-size: 0.85rem;
             margin-bottom: 30px;
             font-family: 'Space Mono', monospace;
@@ -97,8 +89,8 @@
 
         /* profile section */
         .profile-section {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 25px;
@@ -106,37 +98,39 @@
             align-items: center;
             gap: 20px;
             flex-wrap: wrap;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
         }
 
         .avatar {
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1e3a5f, #7dd3fc);
+            background: linear-gradient(135deg, #bfdbfe, #2563eb);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             flex-shrink: 0;
-            border: 2px solid rgba(125, 211, 252, 0.3);
+            border: 2px solid #bfdbfe;
         }
 
         .profile-info h2 {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 4px;
+            color: #1e293b;
         }
 
         .profile-info p {
-            color: #888;
+            color: #64748b;
             font-size: 0.82rem;
         }
 
         .profile-edit-btn {
             margin-left: auto;
-            background: rgba(125, 211, 252, 0.1);
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            color: #7dd3fc;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #2563eb;
             padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
@@ -146,7 +140,7 @@
         }
 
         .profile-edit-btn:hover {
-            background: rgba(125, 211, 252, 0.2);
+            background: #dbeafe;
         }
 
         /* stats cards */
@@ -158,24 +152,26 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 20px;
             text-align: center;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
 
         .stat-card:hover {
             transform: translateY(-3px);
-            border-color: rgba(125, 211, 252, 0.3);
+            border-color: #93c5fd;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.1);
         }
 
         .stat-card .stat-num {
             font-size: 2.2rem;
             font-weight: 700;
             font-family: 'Space Mono', monospace;
-            color: #7dd3fc;
+            color: #2563eb;
             display: block;
             line-height: 1;
             margin-bottom: 6px;
@@ -183,18 +179,19 @@
 
         .stat-card .stat-label {
             font-size: 0.78rem;
-            color: #888;
+            color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         /* sections */
         .section {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 22px;
             margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
 
         .section-header {
@@ -202,20 +199,20 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid #f1f5f9;
             padding-bottom: 12px;
         }
 
         .section-header h3 {
             font-size: 1rem;
             font-weight: 600;
-            color: #ccc;
+            color: #334155;
             font-family: 'Space Mono', monospace;
         }
 
         .section-header .badge {
-            background: rgba(125, 211, 252, 0.15);
-            color: #7dd3fc;
+            background: #eff6ff;
+            color: #2563eb;
             font-size: 0.75rem;
             padding: 3px 10px;
             border-radius: 20px;
@@ -235,14 +232,15 @@
             align-items: flex-start;
             gap: 12px;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
+            background: #f8fafc;
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid #e2e8f0;
             transition: background 0.15s;
         }
 
         .history-item:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: #f0f9ff;
+            border-color: #bfdbfe;
         }
 
         .history-thumb {
@@ -250,22 +248,22 @@
             height: 45px;
             object-fit: cover;
             border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
             flex-shrink: 0;
-            background: #1a1a2e;
+            background: #e2e8f0;
         }
 
         .history-thumb-placeholder {
             width: 60px;
             height: 45px;
             border-radius: 6px;
-            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #bfdbfe;
         }
 
         .history-info {
@@ -276,7 +274,7 @@
         .history-title {
             font-size: 0.88rem;
             font-weight: 600;
-            color: #ddd;
+            color: #1e293b;
             margin-bottom: 3px;
             white-space: nowrap;
             overflow: hidden;
@@ -285,7 +283,7 @@
 
         .history-date {
             font-size: 0.73rem;
-            color: #666;
+            color: #94a3b8;
             font-family: 'Space Mono', monospace;
         }
 
@@ -298,8 +296,8 @@
 
         .btn-small {
             background: none;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #aaa;
+            border: 1px solid #cbd5e1;
+            color: #64748b;
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
@@ -309,33 +307,33 @@
         }
 
         .btn-small:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
         .btn-small.fav {
-            border-color: rgba(251, 191, 36, 0.4);
-            color: #fbbf24;
+            border-color: #fde68a;
+            color: #d97706;
         }
 
         .btn-small.fav:hover {
-            background: rgba(251, 191, 36, 0.1);
+            background: #fef9c3;
         }
 
         .btn-small.del {
-            border-color: rgba(248, 113, 113, 0.4);
-            color: #f87171;
+            border-color: #fecaca;
+            color: #ef4444;
         }
 
         .btn-small.del:hover {
-            background: rgba(248, 113, 113, 0.1);
+            background: #fee2e2;
         }
 
         /* empty state */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
-            color: #555;
+            color: #94a3b8;
         }
 
         .empty-state .big-emoji {
@@ -349,17 +347,17 @@
         }
 
         .empty-state a {
-            color: #7dd3fc;
+            color: #2563eb;
             text-decoration: none;
         }
 
         /* notes */
         .notes-area {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
-            color: #ddd;
+            color: #1e293b;
             font-family: 'Space Mono', monospace;
             font-size: 0.82rem;
             padding: 14px;
@@ -371,14 +369,15 @@
         }
 
         .notes-area:focus {
-            border-color: rgba(125, 211, 252, 0.4);
+            border-color: #93c5fd;
+            background: #fff;
         }
 
         .save-notes-btn {
             margin-top: 10px;
-            background: rgba(125, 211, 252, 0.15);
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            color: #7dd3fc;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #2563eb;
             padding: 8px 20px;
             border-radius: 8px;
             cursor: pointer;
@@ -388,7 +387,7 @@
         }
 
         .save-notes-btn:hover {
-            background: rgba(125, 211, 252, 0.25);
+            background: #dbeafe;
         }
 
         /* favorites grid */
@@ -399,18 +398,19 @@
         }
 
         .fav-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
             position: relative;
         }
 
         .fav-card:hover {
             transform: scale(1.03);
-            border-color: rgba(251, 191, 36, 0.4);
+            border-color: #fde68a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .fav-card img {
@@ -418,13 +418,13 @@
             height: 90px;
             object-fit: cover;
             display: block;
-            background: #1a1a2e;
+            background: #e2e8f0;
         }
 
         .fav-card .fav-title {
             font-size: 0.72rem;
             padding: 8px;
-            color: #ccc;
+            color: #475569;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -434,9 +434,9 @@
             position: absolute;
             top: 4px;
             right: 4px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(255,255,255,0.85);
             border: none;
-            color: #f87171;
+            color: #ef4444;
             width: 22px;
             height: 22px;
             border-radius: 50%;
@@ -447,6 +447,7 @@
             justify-content: center;
             opacity: 0;
             transition: opacity 0.15s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
         }
 
         .fav-card:hover .fav-remove {
@@ -455,17 +456,18 @@
 
         /* danger zone */
         .danger-zone {
-            border-color: rgba(248, 113, 113, 0.2);
+            border-color: #fecaca;
+            background: #fff5f5;
         }
 
         .danger-zone .section-header h3 {
-            color: #f87171;
+            color: #dc2626;
         }
 
         .danger-btn {
-            background: rgba(248, 113, 113, 0.1);
-            border: 1px solid rgba(248, 113, 113, 0.4);
-            color: #f87171;
+            background: #fff;
+            border: 1px solid #fecaca;
+            color: #ef4444;
             padding: 9px 18px;
             border-radius: 8px;
             cursor: pointer;
@@ -477,7 +479,7 @@
         }
 
         .danger-btn:hover {
-            background: rgba(248, 113, 113, 0.2);
+            background: #fee2e2;
         }
 
         /* modal */
@@ -485,7 +487,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(15, 23, 42, 0.4);
             z-index: 999;
             align-items: center;
             justify-content: center;
@@ -497,17 +499,18 @@
         }
 
         .modal {
-            background: #0f0f23;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 28px;
             width: 90%;
             max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
         }
 
         .modal h3 {
             font-family: 'Space Mono', monospace;
-            color: #7dd3fc;
+            color: #1e40af;
             margin-bottom: 16px;
             font-size: 1rem;
         }
@@ -515,10 +518,10 @@
         .modal input,
         .modal textarea {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            color: #ddd;
+            color: #1e293b;
             padding: 10px 12px;
             font-family: 'Inter', sans-serif;
             font-size: 0.88rem;
@@ -528,13 +531,14 @@
         }
 
         .modal input:focus {
-            border-color: rgba(125, 211, 252, 0.4);
+            border-color: #93c5fd;
+            background: #fff;
         }
 
         .modal label {
             display: block;
             font-size: 0.78rem;
-            color: #888;
+            color: #94a3b8;
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -549,8 +553,8 @@
 
         .modal-cancel {
             background: none;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #aaa;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
             padding: 8px 18px;
             border-radius: 8px;
             cursor: pointer;
@@ -559,9 +563,9 @@
         }
 
         .modal-save {
-            background: rgba(125, 211, 252, 0.2);
-            border: 1px solid rgba(125, 211, 252, 0.4);
-            color: #7dd3fc;
+            background: #2563eb;
+            border: 1px solid #2563eb;
+            color: #fff;
             padding: 8px 18px;
             border-radius: 8px;
             cursor: pointer;
@@ -574,9 +578,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #1a1a2e;
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            color: #7dd3fc;
+            background: #1e40af;
+            border: 1px solid #3b82f6;
+            color: #fff;
             padding: 10px 18px;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -586,6 +590,7 @@
             transition: all 0.3s;
             z-index: 9999;
             pointer-events: none;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.25);
         }
 
         #toast.show {
@@ -612,8 +617,8 @@
 
         .tag {
             display: inline-block;
-            background: rgba(125, 211, 252, 0.1);
-            color: #7dd3fc;
+            background: #dbeafe;
+            color: #1d4ed8;
             font-size: 0.7rem;
             padding: 2px 8px;
             border-radius: 4px;
@@ -622,8 +627,8 @@
         }
 
         .tag.video {
-            background: rgba(167, 139, 250, 0.1);
-            color: #a78bfa;
+            background: #ede9fe;
+            color: #7c3aed;
         }
 
         ::-webkit-scrollbar {
@@ -635,7 +640,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
+            background: #cbd5e1;
             border-radius: 3px;
         }
 
@@ -679,7 +684,7 @@
                 <p id="displayBio">✨ astronomy enjoyer • earthling</p>
                 <p style="margin-top:4px; font-size:0.75rem;">
                     <span class="dot green"></span>
-                    <span style="color:#4ade80; font-size:0.75rem;">local storage connected</span>
+                    <span style="color:#16a34a; font-size:0.75rem;">local storage connected</span>
                 </p>
             </div>
             <button class="profile-edit-btn" onclick="openProfileModal()">✏️ edit profile</button>
