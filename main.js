@@ -54,7 +54,7 @@ try {
         <br>
         <p id="textData">${dat.explanation}</p>
         <br>
-        <a href="/dashboard.html" id="dashBtn">📊 go to my dashboard →</a>
+        <a href="./dashboard.html" id="dashBtn">📊 go to my dashboard →</a>
       `;
 
   saveToHistory(dat); // save this view to history for dashboard
