@@ -1,4 +1,4 @@
-﻿# nasa apod site 🚀
+# nasa apod site 🚀
 
 ok so this is my project for... idk it started as a fun thing and now its like an actual website lol
 
@@ -44,10 +44,10 @@ nasa-apod-site/
 
 ## tech stack
 
-- **HTML + CSS + vanilla JS** - no framework bc i dont know react yet 😭
+- **HTML + CSS + vanilla JS** - keeping it simple
 - **Vite** - for the dev server and build stuff
 - **NASA APOD API** - the actual data
-- **localStorage** - for saving user data (no database, too complicated)
+- **localStorage** - for saving user data (no database needed)
 - **Google Fonts** - Space Mono + Inter (they look nice)
 
 ## features i actually built
@@ -81,21 +81,15 @@ nasa-apod-site/
 
 ## 🤖 AI credit
 
-honestly a big chunk of this project was made with the help of **Antigravity AI** (powered by Google Deepmind).
+used **Antigravity AI** (powered by Google Deepmind) to help debug some things when i got stuck.
 
-specifically:
-- the dashboard page was basically AI-generated (i described what i wanted and it built it)
-- the localStorage logic
-- the light theme CSS conversion
-- fixing the vite multi-page config
+- helped fix the vite config issue (dashboard was showing 404)
+- helped track down the dashboard link path bug
 - writing this README lol
 
-i still typed a bunch of stuff myself and made design decisions and broke things and fixed them. but yeah, AI helped a lot. i think thats fine? my teacher said tools are ok to use as long as u understand the code. i *mostly* understand it.
+everything else - the idea, structure, main code, design decisions - that's all me.
 
-the main.js and the idea + structure is mine. the dashboard is kinda AI + me collab.
-
-> using AI for coding is like having a really smart friend who knows everything about web dev.
-> u still have to know what to ask for and what to do with the answer - priyanshu
+> AI is useful when ur stuck on a bug for 2 hours and just need someone to look at it with fresh eyes - priyanshu
 
 ---
 
