@@ -1,0 +1,27 @@
+body {
+  background-color: #f0f0f0;
+  font-family: Arial;
+}
+
+#app {
+    margin: 20px;
+  text-align: center;
+}
+
+#myImg {
+width: 600px;
+max-width: 100%;
+  border: 3px solid black;
+}
+
+#textData {
+    font-size: 18px;
+  padding: 10px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* idk why this is here */
+.hidden {
+    display: none;
+}
