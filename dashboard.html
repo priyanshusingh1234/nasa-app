@@ -1,0 +1,1038 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- dashboard page i made this one - priyanshu -->
+<!-- TODO: make this look better someday lol -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my dashboard - nasa apod thing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ok so styles. I did most of these at 2am so they might be kinda bad */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0a0a1a;
+            color: #e0e0e0;
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(30, 20, 60, 0.8) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(10, 30, 60, 0.6) 0%, transparent 50%),
+                radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 20px);
+            background-size: 100% 100%, 100% 100%, 550px 550px, 350px 350px, 250px 250px;
+            background-color: #0a0a1a;
+        }
+
+        /* nav bar - not needed but will be good*/
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1rem;
+            color: #7dd3fc;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #7dd3fc;
+        }
+
+        .nav-links a.active {
+            color: #7dd3fc;
+            border-bottom: 2px solid #7dd3fc;
+            padding-bottom: 2px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1.page-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            color: #7dd3fc;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(125, 211, 252, 0.4);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* profile section */
+        .profile-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a5f, #7dd3fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            border: 2px solid rgba(125, 211, 252, 0.3);
+        }
+
+        .profile-info h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            color: #888;
+            font-size: 0.82rem;
+        }
+
+        .profile-edit-btn {
+            margin-left: auto;
+            background: rgba(125, 211, 252, 0.1);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            color: #7dd3fc;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .profile-edit-btn:hover {
+            background: rgba(125, 211, 252, 0.2);
+        }
+
+        /* stats cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(125, 211, 252, 0.3);
+        }
+
+        .stat-card .stat-num {
+            font-size: 2.2rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            color: #7dd3fc;
+            display: block;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.78rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* sections */
+        .section {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ccc;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .section-header .badge {
+            background: rgba(125, 211, 252, 0.15);
+            color: #7dd3fc;
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* history */
+        .history-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.15s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .history-thumb {
+            width: 60px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+            background: #1a1a2e;
+        }
+
+        .history-thumb-placeholder {
+            width: 60px;
+            height: 45px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .history-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #ddd;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-date {
+            font-size: 0.73rem;
+            color: #666;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 6px;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .btn-small {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #aaa;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.15s;
+        }
+
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+
+        .btn-small.fav {
+            border-color: rgba(251, 191, 36, 0.4);
+            color: #fbbf24;
+        }
+
+        .btn-small.fav:hover {
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .btn-small.del {
+            border-color: rgba(248, 113, 113, 0.4);
+            color: #f87171;
+        }
+
+        .btn-small.del:hover {
+            background: rgba(248, 113, 113, 0.1);
+        }
+
+        /* empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #555;
+        }
+
+        .empty-state .big-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 0.88rem;
+        }
+
+        .empty-state a {
+            color: #7dd3fc;
+            text-decoration: none;
+        }
+
+        /* notes */
+        .notes-area {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #ddd;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.82rem;
+            padding: 14px;
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .notes-area:focus {
+            border-color: rgba(125, 211, 252, 0.4);
+        }
+
+        .save-notes-btn {
+            margin-top: 10px;
+            background: rgba(125, 211, 252, 0.15);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            color: #7dd3fc;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .save-notes-btn:hover {
+            background: rgba(125, 211, 252, 0.25);
+        }
+
+        /* favorites grid */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .fav-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+        }
+
+        .fav-card:hover {
+            transform: scale(1.03);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .fav-card img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            display: block;
+            background: #1a1a2e;
+        }
+
+        .fav-card .fav-title {
+            font-size: 0.72rem;
+            padding: 8px;
+            color: #ccc;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .fav-card .fav-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: #f87171;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+
+        .fav-card:hover .fav-remove {
+            opacity: 1;
+        }
+
+        /* danger zone */
+        .danger-zone {
+            border-color: rgba(248, 113, 113, 0.2);
+        }
+
+        .danger-zone .section-header h3 {
+            color: #f87171;
+        }
+
+        .danger-btn {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.4);
+            color: #f87171;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+            margin-right: 10px;
+            margin-bottom: 8px;
+        }
+
+        .danger-btn:hover {
+            background: rgba(248, 113, 113, 0.2);
+        }
+
+        /* modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: #0f0f23;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 28px;
+            width: 90%;
+            max-width: 420px;
+        }
+
+        .modal h3 {
+            font-family: 'Space Mono', monospace;
+            color: #7dd3fc;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .modal input,
+        .modal textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: #ddd;
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .modal input:focus {
+            border-color: rgba(125, 211, 252, 0.4);
+        }
+
+        .modal label {
+            display: block;
+            font-size: 0.78rem;
+            color: #888;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        .modal-cancel {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #aaa;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .modal-save {
+            background: rgba(125, 211, 252, 0.2);
+            border: 1px solid rgba(125, 211, 252, 0.4);
+            color: #7dd3fc;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        /* toast */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a1a2e;
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            color: #7dd3fc;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: 'Space Mono', monospace;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-edit-btn {
+                width: 100%;
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(125, 211, 252, 0.1);
+            color: #7dd3fc;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            margin-left: 6px;
+        }
+
+        .tag.video {
+            background: rgba(167, 139, 250, 0.1);
+            color: #a78bfa;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .dot.green {
+            background: #4ade80;
+            box-shadow: 0 0 6px #4ade80;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- nav -->
+    <nav class="nav">
+        <a href="/" class="nav-logo">🚀 NASA APOD</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/dashboard.html" class="active">Dashboard</a>
+            <!-- <a href="#">Settings</a> -->
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h1 class="page-title">// my dashboard</h1>
+        <p class="subtitle">// stored locally in ur browser &bull; last updated: <span id="lastUpdated">—</span></p>
+
+        <!-- profile card -->
+        <div class="profile-section" id="profileSection">
+            <div class="avatar" id="avatarEmoji">🧑‍🚀</div>
+            <div class="profile-info">
+                <h2 id="displayName">Space Explorer</h2>
+                <p id="displayBio">✨ astronomy enjoyer • earthling</p>
+                <p style="margin-top:4px; font-size:0.75rem;">
+                    <span class="dot green"></span>
+                    <span style="color:#4ade80; font-size:0.75rem;">local storage connected</span>
+                </p>
+            </div>
+            <button class="profile-edit-btn" onclick="openProfileModal()">✏️ edit profile</button>
+        </div>
+
+        <!-- stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-num" id="totalViewed">0</span>
+                <span class="stat-label">APODs Viewed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="totalFavs">0</span>
+                <span class="stat-label">Favorites</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="totalNotes">0</span>
+                <span class="stat-label">Notes (words)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="daysSince">0</span>
+                <span class="stat-label">Days Since Join</span>
+            </div>
+        </div>
+
+        <!-- history - full width -->
+        <div class="section" style="margin-bottom:20px">
+            <div class="section-header">
+                <h3>📜 viewing history</h3>
+                <span class="badge" id="historyBadge">0 items</span>
+            </div>
+            <ul class="history-list" id="historyList"></ul>
+        </div>
+
+        <div class="two-col">
+            <!-- favorites -->
+            <div class="section">
+                <div class="section-header">
+                    <h3>⭐ favorites</h3>
+                    <span class="badge" id="favBadge">0</span>
+                </div>
+                <div class="favorites-grid" id="favsGrid"></div>
+            </div>
+
+            <!-- notes -->
+            <div class="section">
+                <div class="section-header">
+                    <h3>📝 my notes</h3>
+                    <span class="badge" id="wordCount">0 words</span>
+                </div>
+                <!-- notes textarea - autosaves every 30s lol -->
+                <textarea class="notes-area" id="notesTextarea"
+                    placeholder="write whatever here... notes about space, cool facts, idk"
+                    oninput="updateWordCount()"></textarea>
+                <button class="save-notes-btn" onclick="saveNotes()">💾 save notes</button>
+            </div>
+        </div>
+
+        <!-- danger zone -->
+        <div class="section danger-zone" style="margin-top:20px">
+            <div class="section-header">
+                <h3>⚠️ danger zone</h3>
+                <span class="badge" style="background:rgba(248,113,113,0.1);color:#f87171;">be careful!!</span>
+            </div>
+            <p style="font-size:0.82rem;color:#666;margin-bottom:14px;">this will delete everything saved locally. no
+                undo. i warned you.</p>
+            <button class="danger-btn" onclick="clearHistory()">🗑️ clear history</button>
+            <button class="danger-btn" onclick="clearFavorites()">💔 clear favorites</button>
+            <button class="danger-btn" onclick="clearEverything()">☠️ nuke everything</button>
+        </div>
+
+    </div>
+
+    <!-- toast -->
+    <div id="toast"></div>
+
+    <!-- profile modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <h3>✏️ edit profile</h3>
+            <label>display name</label>
+            <input type="text" id="nameInput" placeholder="Space Explorer" maxlength="30" />
+            <label>bio / tagline</label>
+            <input type="text" id="bioInput" placeholder="✨ astronomy enjoyer" maxlength="60" />
+            <label>avatar emoji</label>
+            <input type="text" id="emojiInput" placeholder="🧑‍🚀" maxlength="4" />
+            <div class="modal-actions">
+                <button class="modal-cancel" onclick="closeProfileModal()">cancel</button>
+                <button class="modal-save" onclick="saveProfile()">save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ok here's all the javascript. it's kinda messy but it works!!
+        // -- priyanshu
+
+        // keys for localstorage
+        // NOTE: if u change these it'll break all existing data lol
+        var HISTORY_KEY = 'apod_history';
+        var FAVS_KEY = 'apod_favs';
+        var NOTES_KEY = 'apod_notes';
+        var PROFILE_KEY = 'apod_profile';
+        var JOIN_KEY = 'apod_join_date';
+
+        // ---- helpers ----
+
+        function getFromStorage(key) {
+            try {
+                var raw = localStorage.getItem(key);
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch (e) {
+                console.log('error reading from storage', e) // keep this for debugging
+                return null;
+            }
+        }
+
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                console.log('save error', e);
+                showToast('could not save - storage might be full');
+            }
+        }
+
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2500);
+        }
+
+        function fmtDate(isoStr) {
+            if (!isoStr) return '—';
+            var d = new Date(isoStr);
+            return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function fmtTime(isoStr) {
+            if (!isoStr) return '';
+            var d = new Date(isoStr);
+            return d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // ---- join date ----
+        function initJoinDate() {
+            var existing = getFromStorage(JOIN_KEY);
+            if (!existing) saveToStorage(JOIN_KEY, new Date().toISOString());
+        }
+
+        // ---- profile ----
+        function loadProfile() {
+            var p = getFromStorage(PROFILE_KEY) || {};
+            document.getElementById('displayName').textContent = p.name || 'Space Explorer';
+            document.getElementById('displayBio').textContent = p.bio || '✨ astronomy enjoyer • earthling';
+            document.getElementById('avatarEmoji').textContent = p.emoji || '🧑‍🚀';
+        }
+
+        function openProfileModal() {
+            var p = getFromStorage(PROFILE_KEY) || {};
+            document.getElementById('nameInput').value = p.name || '';
+            document.getElementById('bioInput').value = p.bio || '';
+            document.getElementById('emojiInput').value = p.emoji || '';
+            document.getElementById('profileModal').classList.add('show');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('show');
+        }
+
+        function saveProfile() {
+            var name = document.getElementById('nameInput').value.trim() || 'Space Explorer';
+            var bio = document.getElementById('bioInput').value.trim() || '✨ astronomy enjoyer • earthling';
+            var emoji = document.getElementById('emojiInput').value.trim() || '🧑‍🚀';
+            saveToStorage(PROFILE_KEY, { name, bio, emoji });
+            loadProfile();
+            closeProfileModal();
+            showToast('✅ profile saved!');
+        }
+
+        // ---- history ----
+        function getHistory() { return getFromStorage(HISTORY_KEY) || []; }
+
+        function renderHistory() {
+            var history = getHistory();
+            var list = document.getElementById('historyList');
+            var badge = document.getElementById('historyBadge');
+            badge.textContent = history.length + ' item' + (history.length !== 1 ? 's' : '');
+            document.getElementById('totalViewed').textContent = history.length;
+
+            if (history.length === 0) {
+                list.innerHTML = '<div class="empty-state"><span class="big-emoji">🔭</span><p>no history yet! go <a href="/">check out today\'s APOD</a> first :)</p></div>';
+                return;
+            }
+
+            var sorted = [...history].reverse(); // newest first
+            list.innerHTML = sorted.map(function (item, i) {
+                var isVideo = item.media_type === 'video';
+                var thumbHtml = (item.url && !isVideo)
+                    ? '<img src="' + item.url + '" class="history-thumb" alt="' + (item.title || '') + '" loading="lazy" onerror="this.style.display=\'none\'">'
+                    : '<div class="history-thumb-placeholder">' + (isVideo ? '🎬' : '🌌') + '</div>';
+
+                return '<li class="history-item">'
+                    + thumbHtml
+                    + '<div class="history-info">'
+                    + '<div class="history-title">' + (item.title || 'Unknown') + '</div>'
+                    + '<div class="history-date">viewed on ' + fmtDate(item.viewedAt) + ' at ' + fmtTime(item.viewedAt)
+                    + (isVideo ? ' <span class="tag video">VIDEO</span>' : '') + '</div>'
+                    + '</div>'
+                    + '<div class="history-actions">'
+                    + '<button class="btn-small fav" onclick="addToFavorites(' + i + ')" title="add to favorites">⭐</button>'
+                    + '<button class="btn-small del" onclick="removeHistory(' + i + ')" title="remove">✕</button>'
+                    + '</div>'
+                    + '</li>';
+            }).join('');
+        }
+
+        function addToFavorites(reversedIdx) {
+            var history = getHistory();
+            var item = [...history].reverse()[reversedIdx];
+            if (!item) return;
+            var favs = getFromStorage(FAVS_KEY) || [];
+            var already = favs.some(function (f) { return f.apod_date === item.apod_date; });
+            if (already) { showToast('already in favorites!'); return; }
+            favs.push(item);
+            saveToStorage(FAVS_KEY, favs);
+            renderFavorites();
+            showToast('⭐ added to favorites!');
+        }
+
+        function removeHistory(reversedIdx) {
+            var history = getHistory();
+            var item = [...history].reverse()[reversedIdx];
+            var idx = history.findIndex(function (h) { return h.apod_date === item.apod_date && h.viewedAt === item.viewedAt; });
+            if (idx !== -1) { history.splice(idx, 1); saveToStorage(HISTORY_KEY, history); }
+            renderHistory();
+            showToast('🗑️ removed from history');
+        }
+
+        // ---- favorites ----
+        function renderFavorites() {
+            var favs = getFromStorage(FAVS_KEY) || [];
+            var grid = document.getElementById('favsGrid');
+            var badge = document.getElementById('favBadge');
+            badge.textContent = favs.length;
+            document.getElementById('totalFavs').textContent = favs.length;
+
+            if (favs.length === 0) {
+                grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><span class="big-emoji">💫</span><p>no favorites yet. star something from history!</p></div>';
+                return;
+            }
+
+            grid.innerHTML = favs.map(function (f, i) {
+                var isVideo = f.media_type === 'video';
+                return '<div class="fav-card" title="' + (f.title || '') + '">'
+                    + ((!isVideo && f.url) ? '<img src="' + f.url + '" alt="' + (f.title || '') + '" loading="lazy">' : '<div style="height:90px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:2rem;">🎬</div>')
+                    + '<button class="fav-remove" onclick="removeFav(' + i + '); event.stopPropagation();">✕</button>'
+                    + '<div class="fav-title">' + (f.title || '—') + '</div>'
+                    + '</div>';
+            }).join('');
+        }
+
+        function removeFav(idx) {
+            var favs = getFromStorage(FAVS_KEY) || [];
+            favs.splice(idx, 1);
+            saveToStorage(FAVS_KEY, favs);
+            renderFavorites();
+            showToast('💔 removed from favorites');
+        }
+
+        // ---- notes ----
+        function loadNotes() {
+            var notes = getFromStorage(NOTES_KEY) || '';
+            document.getElementById('notesTextarea').value = notes;
+            updateWordCount();
+        }
+
+        function saveNotes() {
+            var notes = document.getElementById('notesTextarea').value;
+            saveToStorage(NOTES_KEY, notes);
+            showToast('📝 notes saved!');
+        }
+
+        function updateWordCount() {
+            var text = document.getElementById('notesTextarea').value;
+            var words = text.trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+            document.getElementById('wordCount').textContent = words.length + ' words';
+            document.getElementById('totalNotes').textContent = words.length;
+        }
+
+        // ---- danger zone ----
+        function clearHistory() {
+            if (!confirm('delete all viewing history? no undo!')) return;
+            saveToStorage(HISTORY_KEY, []);
+            renderHistory();
+            showToast('🗑️ history cleared');
+        }
+
+        function clearFavorites() {
+            if (!confirm('delete all favorites?? are you sure??')) return;
+            saveToStorage(FAVS_KEY, []);
+            renderFavorites();
+            showToast('💔 favorites cleared');
+        }
+
+        function clearEverything() {
+            if (!confirm('DELETE EVERYTHING?? this removes all history, favs, notes, and profile!')) return;
+            [HISTORY_KEY, FAVS_KEY, NOTES_KEY, PROFILE_KEY, JOIN_KEY].forEach(function (k) { localStorage.removeItem(k); });
+            location.reload();
+        }
+
+        // ---- days since joined ----
+        function updateDaysSince() {
+            var joinDate = getFromStorage(JOIN_KEY);
+            if (!joinDate) { document.getElementById('daysSince').textContent = '0'; return; }
+            var ms = Date.now() - new Date(joinDate).getTime();
+            var days = Math.floor(ms / (1000 * 60 * 60 * 24));
+            document.getElementById('daysSince').textContent = days;
+        }
+
+        // close modal on outside click
+        document.getElementById('profileModal').addEventListener('click', function (e) {
+            if (e.target === this) closeProfileModal();
+        });
+
+        // auto-save notes every 30 seconds lol
+        // TODO: maybe make this more efficient idk
+        setInterval(function () {
+            var notes = document.getElementById('notesTextarea').value;
+            if (notes) {
+                saveToStorage(NOTES_KEY, notes);
+                console.log('auto-saved notes at', new Date().toLocaleTimeString()); // debug
+            }
+        }, 30000);
+
+        // ---- init ----
+        function init() {
+            initJoinDate();
+            loadProfile();
+            loadNotes();
+            renderHistory();
+            renderFavorites();
+            updateDaysSince();
+            document.getElementById('lastUpdated').textContent =
+                new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+
+        init(); // run it!
+        // window.onload = init; // commented this out bc i just call it directly above
+    </script>
+
+</body>
+
+</html>

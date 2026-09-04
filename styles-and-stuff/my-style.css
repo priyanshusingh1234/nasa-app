@@ -25,3 +25,19 @@ max-width: 100%;
 .hidden {
     display: none;
 }
+
+/* dashboard link button - added this */
+#dashBtn {
+  display: inline-block;
+  margin-top: 12px;
+  color: #1a73e8;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid #1a73e8;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+#dashBtn:hover {
+  background: #e8f0fe;
+}
